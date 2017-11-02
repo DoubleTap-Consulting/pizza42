@@ -9,6 +9,8 @@ Returns: {
   user: {}
 }
 
+
+
 Endpoint: Get all users
 Method: GET
 Url: /auth/users
@@ -18,6 +20,8 @@ Returns: {
   users: [{},{},{}]
 }
 
+
+
 Endpoint: Update user
 Method: PATCH
 Url: /profile/user/:userid
@@ -26,7 +30,9 @@ body: {
 }
 Returns: 
 Notes: This is a sensitive one -- their API has quite a few specifications about
-properties you can/can't edit in a single call. Other notes on specific properties below.
+properties you can/can't edit in a single call. Detailed info about any errors will be
+given under the response object property 'message'. Other notes on specific properties below.
+
 Available properties to update include:
 // blocked
 // email_verified
@@ -39,6 +45,8 @@ Available properties to update include:
 // user_metadata --> this is an object we can store any properties we'd like. Obj merged only first lvl down
 // app_metadata
 // username --> cannot set username without "requires_username"
+
+
 
 Endpoint: Link two accounts
 Method: POST
@@ -53,6 +61,8 @@ Returns: {
   "user": [{profile},{profile}]
 }
 
+
+
 Endpoint: Unlink two accounts
 Method: DELETE
 Url: /profile/link/:userid
@@ -66,6 +76,8 @@ Returns: {
   "user": [{primary profile}]
 }
 
+
+
 Endpoint: Initiate search of Person API (should only be called if signing up with email/password), info found will be saved in the user object
 Method: POST
 Url: /auth/searchPersonApi/:userid
@@ -78,11 +90,13 @@ Returns: {
   "user": [{updated profile}]
 }
 
+
+
 Endpoint: Initiate FB graph search  (should only be called if signing up with facebook), info found will be saved in the user object
 Method: POST
 Url: /auth/searchGraphApi/:userid
 body: {
-  access_token: "FBAccessToken"
+  access_token: "FBAccessToken"      // Should be able to get this on user profile
 }
 Returns: {
   "message": "success",
