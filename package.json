@@ -1,0 +1,31 @@
+{
+  "name": "pizza42",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "auth0-js": "^8.10.1",
+    "material-ui": "^1.0.0-beta.19",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.16"
+  },
+  "scripts": {
+    "build-css": "NODE_PATH=./src node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css": "NODE_PATH=./src npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "start-js": "NODE_PATH=./src react-scripts start",
+    "start": "NODE_PATH=./src npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && node scripts/build.js",
+    "lint": "NODE_PATH=./src eslint ./ --ignore-pattern .gitignore",
+    "test": "NODE_PATH=./src jest --coverage",
+    "prepush-msg": "echo 'Pre-push checks...' && exit 0"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1",
+    "node-sass": "^4.5.3",
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.1.1",
+    "sass-loader": "^6.0.6"
+  }
+}
