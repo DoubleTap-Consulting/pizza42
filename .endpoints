@@ -1,0 +1,92 @@
+Base endpoint: http://ec2-54-183-30-7.us-west-1.compute.amazonaws.com:3001/api/
+
+Endpoint: Get user
+Method: GET
+Url: /auth/user/:userid
+Returns: {
+  status: 200,
+  message: 'success',
+  user: {}
+}
+
+Endpoint: Get all users
+Method: GET
+Url: /auth/users
+Returns: {
+  status: 200,
+  message: 'success',
+  users: [{},{},{}]
+}
+
+Endpoint: Update user
+Method: PATCH
+Url: /profile/user/:userid
+body: {
+  "password": "asdf123"
+}
+Returns: 
+Notes: This is a sensitive one -- their API has quite a few specifications about
+properties you can/can't edit in a single call. Other notes on specific properties below.
+Available properties to update include:
+// blocked
+// email_verified
+// email
+// verify_email
+// password --> can't update email and password simultaniously
+// phone_number --> must be an 'sms' user to add a phone number??
+// phone_verified
+// verify_password
+// user_metadata --> this is an object we can store any properties we'd like. Obj merged only first lvl down
+// app_metadata
+// username --> cannot set username without "requires_username"
+
+Endpoint: Link two accounts
+Method: POST
+Url: /profile/link/:userid
+body: {
+	"secondaryUserid": "112877179519925844215",     // userid of the second account you want linked to the primary account
+  "secondaryProvider": "google-oauth2"            //provider: this can be found within the user object returned from get user
+}
+Returns: {
+  "message": "success",
+  "status": 200,
+  "user": [{profile},{profile}]
+}
+
+Endpoint: Unlink two accounts
+Method: DELETE
+Url: /profile/link/:userid
+body: {
+	"secondaryUserid": "112877179519925844215",     // userid of the second account you want unlinked from the primary account
+  "secondaryProvider": "google-oauth2"            //provider: this can be found within the user object returned from get user
+}
+Returns: {
+  "message": "success",
+  "status": 200,
+  "user": [{primary profile}]
+}
+
+Endpoint: Initiate search of Person API (should only be called if signing up with email/password), info found will be saved in the user object
+Method: POST
+Url: /auth/searchPersonApi/:userid
+body: {
+  email: "mitrakmt@miamioh.edu"
+}
+Returns: {
+  "message": "success",
+  "status": 200,
+  "user": [{updated profile}]
+}
+
+Endpoint: Initiate FB graph search  (should only be called if signing up with facebook), info found will be saved in the user object
+Method: POST
+Url: /auth/searchGraphApi/:userid
+body: {
+  access_token: "FBAccessToken"
+}
+Returns: {
+  "message": "success",
+  "status": 200,
+  "user": [{updated profile}]
+}
+
