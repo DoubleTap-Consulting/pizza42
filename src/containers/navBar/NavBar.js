@@ -4,6 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import logo from 'pizzaLogo.jpg';
 import MenuIcon from 'material-ui-icons/Menu';
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom'
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import './NavBar.css';
@@ -12,6 +13,10 @@ export class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  onLoginClick(history) {
+    history.push('/login');
   }
 
   render() {
@@ -26,7 +31,11 @@ export class NavBar extends Component {
               <img className="pizza42-navbar-logo" height={25} width={25} src={logo} />
               Pizza 42
           </Typography>
-            <Button color="contrast">Login</Button>
+            <Route
+              render={({ history }) => (
+                <Button color="contrast" onClick={() => { this.onLoginClick(history) }}>Login</Button>
+              )}
+            />
           </Toolbar>
         </AppBar>
       </div>

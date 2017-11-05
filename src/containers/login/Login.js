@@ -1,4 +1,4 @@
-import Auth from '../../utils/auth';
+import Auth from 'utils/auth';
 import React, { Component } from 'react';
 
 export class Login extends Component {
@@ -13,11 +13,7 @@ export class Login extends Component {
   }
 
   render() {
-    return (
-      <div>
-
-      </div>
-    );
+    return null;
   }
 }
 
