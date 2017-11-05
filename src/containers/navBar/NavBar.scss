@@ -1,5 +1,8 @@
 .pizza42-navbar {
   display: flex;
+  &-logo {
+    margin-right: 10px;
+  }
   &-title {
     flex: 1;
   }

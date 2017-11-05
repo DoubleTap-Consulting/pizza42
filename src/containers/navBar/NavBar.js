@@ -23,8 +23,8 @@ export class NavBar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className="pizza42-navbar-title">
-              <img height={25} width={25} src={logo} />
-              Title
+              <img className="pizza42-navbar-logo" height={25} width={25} src={logo} />
+              Pizza 42
           </Typography>
             <Button color="contrast">Login</Button>
           </Toolbar>
