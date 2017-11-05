@@ -6,6 +6,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import React, { Component } from 'react';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import './NavBar.css';
 
 export class NavBar extends Component {
   constructor(props) {
