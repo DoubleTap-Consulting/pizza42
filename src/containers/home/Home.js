@@ -57,7 +57,7 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container justify="left" spacing={24}>
+        <Grid container justify="center" spacing={24}>
           <Grid item>
             <PizzaCard />
           </Grid>
