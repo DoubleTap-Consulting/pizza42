@@ -8,8 +8,26 @@ export default class Auth {
     redirectUri: 'http://localhost:3000/callback',
     audience: 'https://doubletap-consulting.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: 'openid profile'
   })
+
+  getAccessToken() {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('No access token found');
+    }
+    return accessToken;
+  }
+
+  getProfile = (cb) => {
+    let accessToken = this.getAccessToken();
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile;
+      }
+      cb(err, profile);
+    });
+  }
 
   /**
    * @returns {object} The authentication information.
