@@ -28,7 +28,7 @@ class NavBar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className="pizza42-navbar-title">
-              <img className="pizza42-navbar-logo" height={25} width={25} src={logo} />
+              <img className="pizza42-navbar-logo" height={39} width={50} src={logo} />
               Pizza 42
           </Typography>
             <Route
