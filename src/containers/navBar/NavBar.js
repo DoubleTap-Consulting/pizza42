@@ -9,7 +9,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import './NavBar.css';
 
-export class NavBar extends Component {
+class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {};

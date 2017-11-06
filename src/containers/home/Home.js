@@ -1,5 +1,7 @@
+import Auth from 'utils/auth';
 import Grid from 'material-ui/Grid';
 import PizzaCard from 'components/pizzaCard/PizzaCard';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 
@@ -15,10 +17,36 @@ const styles = theme => ({
   },
 });
 
-export class Home extends Component {
+class Home extends Component {
+  static contextTypes = {
+    location: PropTypes.object
+  }
+
+  static defaultProps = {
+    location: {}
+  }
+
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    const auth = new Auth();
+    console.log('props', this.props);
+    // Was logged in
+    if (this.props.location.hash.indexOf('access_token') === -1) {
+      console.log('not logged in');
+    } else {
+      auth.handleAuthentication();
+    }
+  }
+
+  checkAccessToken = (nextState, replace) => {
+    const auth = new Auth();
+    if (/access_token|id_token|error/.test(nextState.location.hash)) {
+      auth.handleAuthentication();
+    }
   }
 
   render() {
