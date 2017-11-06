@@ -1,5 +1,6 @@
 import Avatar from 'material-ui/Avatar';
 import Auth from 'utils/auth';
+import callApi from 'utils/api';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -36,31 +37,42 @@ export class Profile extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      profile: {
+        name: ''
+      }
+    };
     this.auth = new Auth();
   }
 
   componentWillMount() {
-    this.setState({ profile: {} });
     this.auth.getProfile((err, profile) => {
-      this.setState({ profile }, () => {
-        console.log('profile state:', this.state);
+      const config = {
+        url: `/profile/${profile.sub}`,
+        method: 'get'
+      };
+      callApi(config, (response) => {
+        console.log(response);
+        this.setState({
+          profile: response.user
+        });
+      }, (error) => {
+        console.log(error);
       });
     });
   }
 
   render() {
     const { classes } = this.props;
-    const { profile } = this.state;
     return (
       <Card className={classes.card}>
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              M
-          </Avatar>
+              {this.state.profile.name.substring(0, 1)}
+            </Avatar>
           }
-          title="mike@michaelflores.io"
+          title={this.state.profile.name}
           subheader="Member since November 5th, 2017"
         />
       </Card>
