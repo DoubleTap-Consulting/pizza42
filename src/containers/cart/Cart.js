@@ -1,6 +1,6 @@
 import Auth from 'utils/auth';
 import Grid from 'material-ui/Grid';
-import PizzaCard from 'components/pizzaCard/PizzaCard';
+import CartItem from 'components/cartItem/CartItem';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
@@ -30,11 +30,31 @@ class Cart extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      cartCount: 0,
+      cart: []
+    };
   }
 
   componentDidMount() {
+    console.log('here')
+    const cartCount = localStorage.getItem('cartCount') || 0;
+    let cart = [];
+    for (var i = 0; i < cartCount; i++) {
+      cart.push(1);
+    }
+    this.setState({
+      cart,
+      cartCount
+    })
+  }
 
+  removeCartItem = () => {
+    localStorage.setItem('cartCount', this.state.cartCount - 1 || 0);
+    this.setState({
+      cart: this.state.cart.splice(1),
+      cartCount: this.state.cartCount - 1
+    })
   }
 
   render() {
@@ -42,24 +62,13 @@ class Cart extends Component {
     return (
       <div className={classes.root}>
         <Grid container justify="left" spacing={24}>
-          <Grid item>
-            <PizzaCard />
-          </Grid>
-          <Grid item>
-            <PizzaCard />
-          </Grid>
-          <Grid item>
-            <PizzaCard />
-          </Grid>
-          <Grid item>
-            <PizzaCard />
-          </Grid>
-          <Grid item>
-            <PizzaCard />
-          </Grid>
-          <Grid item>
-            <PizzaCard />
-          </Grid>
+          {
+            this.state.cart.map((i) =>
+              <Grid item key={this.state.cartCount[i]}>
+                <CartItem removeCartItem={this.removeCartItem} />
+              </Grid>
+            )
+          }
         </Grid>
       </div>
     );

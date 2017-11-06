@@ -1,6 +1,5 @@
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
-import history from 'utils/history';
 import IconButton from 'material-ui/IconButton';
 import logo from 'pizzaLogo.jpg';
 import MenuIcon from 'material-ui-icons/Menu';
@@ -30,8 +29,12 @@ class NavBar extends Component {
     })
   }
 
-  openCart = () => {
+  openCart = (history) => {
     history.push('/cart');
+  }
+
+  navigateHome = (history) => {
+    history.push('/home')
   }
 
   render() {
@@ -54,7 +57,11 @@ class NavBar extends Component {
           </Toolbar>
         </AppBar>
       </div>,
-      <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} openCart={this.openCart} />]
+      <Route
+        render={({ history }) => (
+          <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
+        )}
+      />]
     );
   }
 }

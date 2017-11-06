@@ -24,6 +24,9 @@ export class Sidebar extends Component {
           style={{ width: 250 }}
         >
           <List>
+            <ListItem button onClick={this.props.navigateHome}>
+              <ListItemText primary="Home" />
+            </ListItem>
             <ListItem button>
               <ListItemText primary="Profile" />
             </ListItem>

@@ -49,7 +49,8 @@ class Home extends Component {
   addToCart = () => {
     // check if loggedIn
     // add to localStorage
-    console.log('hi', this.state)
+    const currentCount = localStorage.getItem('cartCount') || 0
+    localStorage.setItem('cartCount', parseInt(currentCount) + 1)
     // if not logged in, button should be disabled
   }
 
