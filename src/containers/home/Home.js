@@ -35,7 +35,6 @@ class Home extends Component {
 
   componentDidMount() {
     const auth = new Auth();
-    console.log('props', this.props);
     // Was logged in
     if (this.props.location.hash.indexOf('access_token') === -1) {
       console.log('not logged in');
