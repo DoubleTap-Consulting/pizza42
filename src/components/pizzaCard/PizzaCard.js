@@ -42,7 +42,7 @@ export class PizzaCard extends Component {
             Favorite
           </Button>
           <Button dense color="primary">
-            Add to Cart
+            Add to Order
           </Button>
         </CardActions>
       </Card>
