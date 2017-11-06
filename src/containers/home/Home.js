@@ -38,7 +38,9 @@ class Home extends Component {
     if (this.props.location.hash.indexOf('access_token') === -1) {
       console.log('not logged in');
     } else {
-      auth.handleAuthentication();
+      this.setState({
+        user: auth.handleAuthentication()
+      });
     }
   }
 
