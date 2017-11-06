@@ -35,7 +35,6 @@ class Home extends Component {
 
   componentDidMount() {
     const auth = new Auth();
-    console.log('props', this.props);
     // Was logged in
     if (this.props.location.hash.indexOf('access_token') === -1) {
       console.log('not logged in');
@@ -65,7 +64,7 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container justify="left" spacing={24}>
+        <Grid container justify="center" spacing={24}>
           <Grid item>
             <PizzaCard addToCart={this.addToCart} user={this.state.user} />
           </Grid>

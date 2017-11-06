@@ -2,15 +2,21 @@ import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import Hidden from 'material-ui/Hidden';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import './Sidebar.css';
 
 export class Sidebar extends Component {
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super(props);
-    this.state = {
-      open: false
-    };
+  }
+
+  onProfileItemClick = () => {
+    this.context.router.history.push('/profile')
   }
 
   render() {
@@ -27,7 +33,7 @@ export class Sidebar extends Component {
             <ListItem button onClick={this.props.navigateHome}>
               <ListItemText primary="Home" />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={this.onProfileItemClick}>
               <ListItemText primary="Profile" />
             </ListItem>
             <ListItem button onClick={this.props.openCart}>
