@@ -9,6 +9,8 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 30,
+    paddingLeft: 30,
+    paddingRight: 30
   },
   paper: {
     padding: 16,
@@ -55,23 +57,23 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={6}>
+        <Grid container justify="left" spacing={24}>
+          <Grid item>
             <PizzaCard />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item>
             <PizzaCard />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item>
             <PizzaCard />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item>
             <PizzaCard />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item>
             <PizzaCard />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item>
             <PizzaCard />
           </Grid>
         </Grid>
