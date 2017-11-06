@@ -15,7 +15,7 @@ const muiComponentStyles = {
   },
 };
 
-export class PizzaCard extends Component {
+export class CartItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -33,16 +33,10 @@ export class PizzaCard extends Component {
           <Typography type="headline" component="h2">
             Medium Pepperoni Pizza
           </Typography>
-          <Typography component="p">
-            A delicious, delectable, delightful pizza topped with pepperonis.
-          </Typography>
         </CardContent>
         <CardActions>
-          <Button dense color="accent">
-            Favorite
-          </Button>
-          <Button dense color="primary" onClick={this.props.addToCart}>
-            Add to Order
+          <Button dense color="accent" onClick={this.props.removeCartItem}>
+            Remove
           </Button>
         </CardActions>
       </Card>
@@ -50,4 +44,4 @@ export class PizzaCard extends Component {
   }
 }
 
-export default withStyles(muiComponentStyles)(PizzaCard);
+export default withStyles(muiComponentStyles)(CartItem);

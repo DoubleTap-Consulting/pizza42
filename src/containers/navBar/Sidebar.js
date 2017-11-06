@@ -30,8 +30,14 @@ export class Sidebar extends Component {
           style={{ width: 250 }}
         >
           <List>
+            <ListItem button onClick={this.props.navigateHome}>
+              <ListItemText primary="Home" />
+            </ListItem>
             <ListItem button onClick={this.onProfileItemClick}>
               <ListItemText primary="Profile" />
+            </ListItem>
+            <ListItem button onClick={this.props.openCart}>
+              <ListItemText primary="Cart" />
             </ListItem>
           </List>
           <Divider />

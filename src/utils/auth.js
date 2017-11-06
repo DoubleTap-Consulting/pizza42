@@ -33,7 +33,7 @@ export default class Auth {
    * @returns {object} The authentication information.
    */
   handleAuthentication() {
-    this.auth0.parseHash((err, authResult) => {
+    return this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         history.replace('/home');

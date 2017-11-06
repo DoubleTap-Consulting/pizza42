@@ -29,6 +29,14 @@ class NavBar extends Component {
     })
   }
 
+  openCart = (history) => {
+    history.push('/cart');
+  }
+
+  navigateHome = (history) => {
+    history.push('/home')
+  }
+
   render() {
     return (
       [<div className="pizza42-navbar">
@@ -49,7 +57,11 @@ class NavBar extends Component {
           </Toolbar>
         </AppBar>
       </div>,
-      <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} />]
+      <Route
+        render={({ history }) => (
+          <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
+        )}
+      />]
     );
   }
 }
