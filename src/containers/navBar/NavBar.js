@@ -4,28 +4,38 @@ import IconButton from 'material-ui/IconButton';
 import logo from 'pizzaLogo.jpg';
 import MenuIcon from 'material-ui-icons/Menu';
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+// Relative imports
+import Sidebar from './Sidebar';
 import './NavBar.css';
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      sidebarOpen: false
+    };
   }
 
   onLoginClick(history) {
     history.push('/login');
   }
 
+  toggleSidebar = () => {
+    this.setState({
+      sidebarOpen: !this.state.sidebarOpen
+    })
+  }
+
   render() {
     return (
-      <div className="pizza42-navbar">
+      [<div className="pizza42-navbar">
         <AppBar position="static">
           <Toolbar>
             <IconButton className="pizza42-navbar-iconButton" color="contrast" aria-label="Menu">
-              <MenuIcon />
+              <MenuIcon onClick={this.toggleSidebar} />
             </IconButton>
             <Typography type="title" color="inherit" className="pizza42-navbar-title">
               <img className="pizza42-navbar-logo" height={39} width={50} src={logo} />
@@ -38,7 +48,8 @@ class NavBar extends Component {
             />
           </Toolbar>
         </AppBar>
-      </div>
+      </div>,
+      <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} />]
     );
   }
 }
