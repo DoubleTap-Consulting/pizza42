@@ -1,6 +1,7 @@
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import React, { Component } from 'react';
+import pizzaImage from 'peppPizza.jpg';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
@@ -25,7 +26,7 @@ export class PizzaCard extends Component {
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image={pizzaImage}
           title="Contemplative Reptile"
         />
         <CardContent>
