@@ -41,7 +41,7 @@ export class PizzaCard extends Component {
           <Button dense color="accent">
             Favorite
           </Button>
-          <Button dense color="primary">
+          <Button dense color="primary" onClick={this.props.addToCart}>
             Add to Cart
           </Button>
         </CardActions>

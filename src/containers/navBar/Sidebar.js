@@ -27,6 +27,9 @@ export class Sidebar extends Component {
             <ListItem button>
               <ListItemText primary="Profile" />
             </ListItem>
+            <ListItem button onClick={this.props.openCart}>
+              <ListItemText primary="Cart" />
+            </ListItem>
           </List>
           <Divider />
         </div>

@@ -46,6 +46,13 @@ class Home extends Component {
     }
   }
 
+  addToCart = () => {
+    // check if loggedIn
+    // add to localStorage
+    console.log('hi', this.state)
+    // if not logged in, button should be disabled
+  }
+
   checkAccessToken = (nextState, replace) => {
     const auth = new Auth();
     if (/access_token|id_token|error/.test(nextState.location.hash)) {
@@ -59,22 +66,22 @@ class Home extends Component {
       <div className={classes.root}>
         <Grid container justify="left" spacing={24}>
           <Grid item>
-            <PizzaCard />
+            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
           </Grid>
           <Grid item>
-            <PizzaCard />
+            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
           </Grid>
           <Grid item>
-            <PizzaCard />
+            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
           </Grid>
           <Grid item>
-            <PizzaCard />
+            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
           </Grid>
           <Grid item>
-            <PizzaCard />
+            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
           </Grid>
           <Grid item>
-            <PizzaCard />
+            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
           </Grid>
         </Grid>
       </div>
