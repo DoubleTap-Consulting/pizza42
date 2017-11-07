@@ -2,8 +2,10 @@ import Avatar from 'material-ui/Avatar';
 import Auth from 'utils/auth';
 import callApi from 'utils/api';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
+import Grid from 'material-ui/Grid';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
@@ -39,7 +41,10 @@ export class Profile extends Component {
     super(props);
     this.state = {
       profile: {
-        name: ''
+        name: '',
+        user_metadata: {
+          socialProfiles: []
+        }
       }
     };
     this.auth = new Auth();
@@ -65,17 +70,36 @@ export class Profile extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.state.profile.name.substring(0, 1)}
-            </Avatar>
-          }
-          title={this.state.profile.name}
-          subheader="Member since November 5th, 2017"
-        />
-      </Card>
+      <div>
+        <Card className={classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="Recipe" className={classes.avatar}>
+                {this.state.profile.name.substring(0, 1)}
+              </Avatar>
+            }
+            title={this.state.profile.name}
+            subheader="Member since November 5th, 2017"
+            style={{ marginBottom: 15 }}
+          />
+        </Card>
+        <Grid container justify="center" spacing={24}>
+          {this.state.profile.user_metadata.socialProfiles.map((account, index) => (
+            <Grid key={account.typeName} item xs={6}>
+              <Card>
+                <CardContent>
+                  <Typography type="headline">
+                    {account.typeName}
+                  </Typography>
+                  <Typography type="body1">
+                    {account.url}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </div>
     );
   }
 }
