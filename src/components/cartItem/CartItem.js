@@ -1,7 +1,7 @@
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import React, { Component } from 'react';
-import pizzaImage from 'peppPizza.jpg';
+import pizzaImage from 'images/peppPizza.jpg';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';

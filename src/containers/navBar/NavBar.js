@@ -1,7 +1,7 @@
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
-import logo from 'pizzaLogo.jpg';
+import logo from 'images/pizzaLogo.jpg';
 import MenuIcon from 'material-ui-icons/Menu';
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
