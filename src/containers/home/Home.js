@@ -21,10 +21,12 @@ const styles = theme => ({
 
 class Home extends Component {
   static contextTypes = {
+    history: PropTypes.object,
     location: PropTypes.object
   }
 
   static defaultProps = {
+    history: {},
     location: {}
   }
 
@@ -35,13 +37,22 @@ class Home extends Component {
 
   componentDidMount() {
     const auth = new Auth();
-    // Was logged in
-    if (this.props.location.hash.indexOf('access_token') === -1) {
-      console.log('not logged in');
-    } else {
-      this.setState({
-        user: auth.handleAuthentication()
+    auth.handleAuthentication()
+      .then(user => {
+        // Was logged in
+        if (this.props.location.hash.indexOf('access_token') === -1) {
+          console.log('not logged in');
+        } else {
+          this.setState({
+            user
+          }, () => {
+            console.log('user', this.state.user);
+          });
+        }
       });
+
+    if (localStorage.getItem('loginType') === 'link') {
+      this.props.history.push('/profile');
     }
   }
 

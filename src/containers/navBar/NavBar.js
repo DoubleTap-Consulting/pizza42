@@ -34,7 +34,7 @@ class NavBar extends Component {
   }
 
   navigateHome = (history) => {
-    history.push('/home')
+    history.push('/home');
   }
 
   render() {

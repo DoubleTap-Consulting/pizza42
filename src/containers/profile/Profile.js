@@ -10,6 +10,7 @@ import facebookLogo from 'images/logo_facebook.jpg';
 import PropTypes from 'prop-types';
 import twitterLogo from 'images/logo_twitter.png';
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
@@ -68,11 +69,35 @@ export class Profile extends Component {
         console.log(response);
         this.setState({
           profile: response.user
+        }, () => {
+          if (localStorage.getItem('loginType') === 'link') {
+            callApi({
+              url: `/profile/link/${localStorage.getItem('linkAccountRequestingSub')}`,
+              method: 'post',
+              data: {
+                secondaryUserid: this.state.profile.user_id.substring(this.state.profile.user_id.indexOf('|') + 1),
+                secondaryProvider: this.state.profile.user_id.substring(0, this.state.profile.user_id.indexOf('|'))
+              }
+            }, (response) => {
+              console.log('finished linking accounts. response: ', response);
+            }, (error) => {
+              console.log(error);
+            });
+          }
         });
       }, (error) => {
         console.log(error);
       });
     });
+  }
+
+  linkAccount = (history) => {
+    // Hack: using a HLP doesn't really allow us much info about why it was called
+    // so set this so when we come back to Home container, we can know what kind of auth it was.
+    // i.e. linking account vs new signup or login
+    localStorage.setItem('loginType', 'link');
+    localStorage.setItem('linkAccountRequestingSub', this.state.profile.user_id);
+    history.push('/login');
   }
 
   render() {
@@ -108,9 +133,13 @@ export class Profile extends Component {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button dense color="primary">
-                  Link Account
-                </Button>
+                <Route
+                  render={({ history }) => (
+                    <Button dense color="primary" onClick={() => this.linkAccount(history)}>
+                      Link Account
+                    </Button>
+                  )}
+                />
               </CardActions>
             </Card>
           </Grid>
