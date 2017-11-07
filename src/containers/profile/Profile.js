@@ -100,6 +100,7 @@ export class Profile extends Component {
     localStorage.setItem('loginType', 'link');
     localStorage.setItem('linkAccountRequestingSub', this.state.profile.user_id);
     history.push('/login');
+    // this.auth.login();
   }
 
   render() {
@@ -130,9 +131,6 @@ export class Profile extends Component {
                 <Typography type="headline">
                   Facebook
                 </Typography>
-                <Typography type="body1">
-                  Body text
-                </Typography>
               </CardContent>
               <CardActions>
                 <Route
@@ -156,9 +154,6 @@ export class Profile extends Component {
                 <Typography type="headline">
                   Twitter
                   </Typography>
-                <Typography type="body1">
-                  Body text
-                </Typography>
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
@@ -178,9 +173,6 @@ export class Profile extends Component {
                 <Typography type="headline">
                   Google
                   </Typography>
-                <Typography type="body1">
-                  Body text
-                </Typography>
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
@@ -200,9 +192,6 @@ export class Profile extends Component {
                 <Typography type="headline">
                   Email
                   </Typography>
-                <Typography type="body1">
-                  Body text
-                </Typography>
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
