@@ -71,8 +71,9 @@ export class Profile extends Component {
           profile: response.user
         }, () => {
           if (localStorage.getItem('loginType') === 'link') {
+            const requestSub = localStorage.getItem('linkAccountRequestingSub');
             callApi({
-              url: `/profile/link/${localStorage.getItem('linkAccountRequestingSub')}`,
+              url: `/profile/link/${requestSub.substring(requestSub.indexOf('|') + 1)}`,
               method: 'post',
               data: {
                 secondaryUserid: this.state.profile.user_id.substring(this.state.profile.user_id.indexOf('|') + 1),
