@@ -27,7 +27,7 @@ export class PizzaCard extends Component {
         <CardMedia
           className={classes.media}
           image={this.props.image || pizzaImage}
-          title="Contemplative Reptile"
+          title="Pizza image"
         />
         <CardContent>
           <Typography type="headline" component="h2">
