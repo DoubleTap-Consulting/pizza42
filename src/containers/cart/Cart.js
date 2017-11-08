@@ -1,5 +1,4 @@
 import Grid from 'material-ui/Grid';
-import CartItem from 'components/cartItem/CartItem';
 import PizzaCard from 'components/pizzaCard/PizzaCard';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
