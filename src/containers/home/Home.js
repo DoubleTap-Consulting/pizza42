@@ -5,6 +5,8 @@ import PizzaCard from 'components/pizzaCard/PizzaCard';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
+// Relative imports
+import seedPizzaArray from './pizzasArray';
 
 const styles = theme => ({
   root: {
@@ -33,7 +35,9 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      pizzas: seedPizzaArray()
+    };
   }
 
   componentDidMount() {
@@ -91,24 +95,17 @@ class Home extends Component {
     return (
       <div className={classes.root}>
         <Grid container justify="center" spacing={24}>
-          <Grid item>
-            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
-          </Grid>
-          <Grid item>
-            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
-          </Grid>
-          <Grid item>
-            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
-          </Grid>
-          <Grid item>
-            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
-          </Grid>
-          <Grid item>
-            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
-          </Grid>
-          <Grid item>
-            <PizzaCard addToCart={this.addToCart} user={this.state.user} />
-          </Grid>
+          {this.state.pizzas.map((pizza, index) => (
+            <Grid item>
+              <PizzaCard
+                addToCart={this.addToCart}
+                image={pizza.image}
+                textBody={pizza.textBody}
+                textHeadline={pizza.textHeadline}
+                user={this.state.user}
+              />
+            </Grid>
+          ))}
         </Grid>
       </div>
     );
