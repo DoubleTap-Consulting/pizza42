@@ -9,48 +9,53 @@ const styles = theme => ({
     flexGrow: 1,
     marginTop: 100,
     paddingLeft: 30,
-    paddingRight: 30
+    paddingRight: 30,
   },
   paper: {
     padding: 16,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  }
+  },
 });
 
 class Cart extends Component {
   static contextTypes = {
-    location: PropTypes.object
+    location: PropTypes.object,
   }
 
   static defaultProps = {
-    location: {}
+    classes: {},
+  }
+
+  static propTypes = {
+    classes: PropTypes.object,
+    location: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      cart: []
+      cart: [],
     };
   }
 
   componentDidMount() {
-    const cart = JSON.parse(localStorage.getItem('cart'));
+    const cart = JSON.parse(localStorage.getItem('cart')); // eslint-disable-line no-undef
 
     this.setState({
-      cart
+      cart,
     });
   }
 
   removeCartItem = (key) => {
-    let cart = this.state.cart.slice();
+    const cart = this.state.cart.slice();
 
     cart.splice(key, 1);
 
     this.setState({
-      cart
+      cart,
     }, () => {
-      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart)); // eslint-disable-line no-undef
     });
   }
 
