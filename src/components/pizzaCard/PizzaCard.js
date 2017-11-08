@@ -18,6 +18,20 @@ const muiComponentStyles = {
 };
 
 export class PizzaCard extends Component {
+  static defaultProps = {
+    isCartItem: false,
+  }
+
+  static propTypes = {
+    addToCart: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
+    image: PropTypes.string.isRequired,
+    isCartItem: PropTypes.bool,
+    pizzaKey: PropTypes.number.isRequired,
+    textBody: PropTypes.string.isRequired,
+    textHeadline: PropTypes.string.isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -76,8 +90,18 @@ export class PizzaCard extends Component {
                 Favorite
             </Button>
           }
-          <Button dense color="primary" disabled={!this.props.loggedIn} onClick={this.props.addToCart}>
-            Add to Order
+          <Button
+            dense
+            color="primary"
+            disabled={!this.props.loggedIn}
+            onClick={() => this.props.addToCart({
+              image: this.props.image,
+              key: this.props.pizzaKey,
+              textBody: this.props.textBody,
+              textHeadline: this.props.textHeadline,
+            })}
+          >
+            {this.props.isCartItem ? 'Remove from Cart' : 'Add to Order'}
           </Button>
         </CardActions>
       </Card>

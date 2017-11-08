@@ -18,25 +18,24 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const auth = new Auth();
     // Was logged in
     if (!localStorage.getItem('access_token')) {
       this.setState({
         loggedIn: false
-      })
+      });
     } else {
       this.setState({
         loggedIn: true
-      })
+      });
     }
   }
 
   logout = () => {
-    const auth = new Auth;
+    const auth = new Auth();
     this.setState({
       loggedIn: false
-    })
-    auth.logout()
+    });
+    auth.logout();
   }
 
   render() {
