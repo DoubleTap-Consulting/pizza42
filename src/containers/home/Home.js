@@ -96,7 +96,7 @@ class Home extends Component {
       <div className={classes.root}>
         <Grid container justify="center" spacing={24}>
           {this.state.pizzas.map((pizza, index) => (
-            <Grid item>
+            <Grid item sm={6} lg={4} xl={2} >
               <PizzaCard
                 addToCart={this.addToCart}
                 image={pizza.image}
