@@ -1,4 +1,3 @@
-import Auth from 'utils/auth';
 import Grid from 'material-ui/Grid';
 import CartItem from 'components/cartItem/CartItem';
 import PropTypes from 'prop-types';

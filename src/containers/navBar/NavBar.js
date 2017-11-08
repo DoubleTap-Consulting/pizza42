@@ -1,7 +1,7 @@
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
-import logo from 'pizzaLogo.jpg';
+import logo from 'images/pizzaLogo.jpg';
 import MenuIcon from 'material-ui-icons/Menu';
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
@@ -34,13 +34,13 @@ class NavBar extends Component {
   }
 
   navigateHome = (history) => {
-    history.push('/home')
+    history.push('/home');
   }
 
   render() {
     return (
-      [<div className="pizza42-navbar">
-        <AppBar position="static">
+      [<div className="pizza42-navbar" key={'navbar'}>
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton className="pizza42-navbar-iconButton" color="contrast" aria-label="Menu">
               <MenuIcon onClick={this.toggleSidebar} />
@@ -58,6 +58,7 @@ class NavBar extends Component {
         </AppBar>
       </div>,
       <Route
+        key={'sidebar'}
         render={({ history }) => (
           <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
         )}

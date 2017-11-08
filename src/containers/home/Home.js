@@ -1,4 +1,5 @@
 import Auth from 'utils/auth';
+import callApi from 'utils/api';
 import Grid from 'material-ui/Grid';
 import PizzaCard from 'components/pizzaCard/PizzaCard';
 import PropTypes from 'prop-types';
@@ -8,7 +9,7 @@ import { withStyles } from 'material-ui/styles';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30,
+    marginTop: 100,
     paddingLeft: 30,
     paddingRight: 30
   },
@@ -21,10 +22,12 @@ const styles = theme => ({
 
 class Home extends Component {
   static contextTypes = {
+    history: PropTypes.object,
     location: PropTypes.object
   }
 
   static defaultProps = {
+    history: {},
     location: {}
   }
 
@@ -35,22 +38,45 @@ class Home extends Component {
 
   componentDidMount() {
     const auth = new Auth();
-    // Was logged in
-    if (this.props.location.hash.indexOf('access_token') === -1) {
-      console.log('not logged in');
-    } else {
-      this.setState({
-        user: auth.handleAuthentication()
+    auth.handleAuthentication()
+      .then(user => {
+        // Was logged in
+        if (this.props.location.hash.indexOf('access_token') === -1) {
+          console.log('not logged in');
+        } else {
+          this.setState({
+            user
+          }, () => {
+            console.log('user', this.state.user);
+            // See #19
+            console.log('calling dat graph endpoint boiii');
+            if (this.state.user.idTokenPayload.sub.indexOf('facebook') !== -1) {
+              let config = {
+                url: `/auth/searchGraphApi/${this.state.user.idTokenPayload.sub}`,
+                method: 'get'
+              };
+              callApi(config, (response) => {
+                let config = {
+                  url: `/profile/${this.state.user.idTokenPayload.sub}`,
+                  method: 'get'
+                };
+                callApi(config, response => this.setState({ user: response.user }), error => console.log(error));
+              }, error => console.log(error));
+            }
+          });
+        }
       });
+
+    if (localStorage.getItem('loginType') === 'link') {
+      this.props.history.push('/profile');
     }
   }
 
   addToCart = () => {
     // check if loggedIn
     // add to localStorage
-    const currentCount = localStorage.getItem('cartCount') || 0
-    localStorage.setItem('cartCount', parseInt(currentCount) + 1)
-    // if not logged in, button should be disabled
+    const currentCount = localStorage.getItem('cartCount') || 0;
+    localStorage.setItem('cartCount', parseInt(currentCount, 10) + 1);
   }
 
   checkAccessToken = (nextState, replace) => {
