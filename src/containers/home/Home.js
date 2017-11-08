@@ -36,38 +36,55 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pizzas: seedPizzaArray()
+      pizzas: seedPizzaArray(),
+      user: {
+        idTokenPayload: {
+          sub: ''
+        },
+        user_metadata: {
+          favorite_pizzas: []
+        }
+      }
     };
   }
 
   componentDidMount() {
     const auth = new Auth();
+    const uid = localStorage.getItem('userid')
+    if (uid) {
+      this.setState({
+        loggedIn: true
+      })
+      let config = {
+        url: `/profile/${uid}`,
+        method: 'get'
+      };
+      callApi(config, response => {
+        console.log('response', response.user);
+        this.setState({ user: response.user })
+      }, error => console.log(error));
+    }
+
     auth.handleAuthentication()
       .then(user => {
         // Was logged in
-        if (this.props.location.hash.indexOf('access_token') === -1) {
+        if (!this.props.location.hash.indexOf('access_token')) {
           console.log('not logged in');
-        } else {
           this.setState({
-            user
-          }, () => {
-            console.log('user', this.state.user);
-            // See #19
-            console.log('calling dat graph endpoint boiii');
-            if (this.state.user.idTokenPayload.sub.indexOf('facebook') !== -1) {
-              let config = {
-                url: `/auth/searchGraphApi/${this.state.user.idTokenPayload.sub}`,
-                method: 'get'
-              };
-              callApi(config, (response) => {
-                let config = {
-                  url: `/profile/${this.state.user.idTokenPayload.sub}`,
-                  method: 'get'
-                };
-                callApi(config, response => this.setState({ user: response.user }), error => console.log(error));
-              }, error => console.log(error));
-            }
-          });
+            loggedIn: false
+          })
+        } else {
+          console.log('url', `/profile/${user.idTokenPayload.sub}`)
+          this.setState({
+            loggedIn: true
+          })
+          if (user.idTokenPayload.sub.indexOf('facebook') !== -1) {
+            let config = {
+              url: `/auth/searchGraphApi/${user.idTokenPayload.sub}`,
+              method: 'get'
+            };
+            callApi(config, (response) => { }, error => console.log(error));
+          }
         }
       });
 
@@ -95,6 +112,10 @@ class Home extends Component {
     }
   }
 
+  logging = () => {
+    console.log('state', this.state)
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -104,8 +125,14 @@ class Home extends Component {
             <Grid item key={pizza.textHeadline} sm={6} md={6} lg={4} xl={2}>
               <PizzaCard
                 addToCart={this.addToCart}
+                user_metadata={this.state.user.user_metadata}
                 image={pizza.image}
+<<<<<<< HEAD
+                loggedIn={this.state.loggedIn}
+                pizzaId={pizza.key}
+=======
                 pizzaKey={pizza.key}
+>>>>>>> 420e15ae7bf3f66f1fdbb78cd97839b6d8e2e714
                 textBody={pizza.textBody}
                 textHeadline={pizza.textHeadline}
                 user={this.state.user}

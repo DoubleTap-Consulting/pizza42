@@ -19,7 +19,7 @@ class App extends Component {
 
   componentDidMount() {
     // Was logged in
-    if (localStorage.getItem('access_token') === -1) {
+    if (!localStorage.getItem('access_token')) {
       this.setState({
         loggedIn: false
       });
