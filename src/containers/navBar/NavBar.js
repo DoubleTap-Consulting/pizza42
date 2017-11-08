@@ -68,7 +68,7 @@ class NavBar extends Component {
       </div>,
       <Route
         render={({ history }) => (
-          <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
+          <Sidebar open={this.state.sidebarOpen} loggedIn={this.props.loggedIn} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
         )}
       />]
     );

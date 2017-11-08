@@ -33,9 +33,12 @@ export class Sidebar extends Component {
             <ListItem button onClick={this.props.navigateHome}>
               <ListItemText primary="Home" />
             </ListItem>
-            <ListItem button onClick={this.onProfileItemClick}>
-              <ListItemText primary="Profile" />
-            </ListItem>
+            {
+              this.props.loggedIn &&
+              <ListItem button onClick={this.onProfileItemClick}>
+                <ListItemText primary="Profile" />
+              </ListItem>
+            }
             <ListItem button onClick={this.props.openCart}>
               <ListItemText primary="Cart" />
             </ListItem>
