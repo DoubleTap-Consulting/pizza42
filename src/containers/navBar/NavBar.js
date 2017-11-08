@@ -1,4 +1,3 @@
-import Auth from 'utils/auth';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
