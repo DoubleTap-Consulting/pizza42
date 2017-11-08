@@ -1,3 +1,4 @@
+import Auth from 'utils/auth';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
@@ -49,18 +50,26 @@ class NavBar extends Component {
               <img className="pizza42-navbar-logo" height={39} width={50} src={logo} />
               Pizza 42
           </Typography>
-            <Route
-              render={({ history }) => (
-                <Button color="contrast" onClick={() => { this.onLoginClick(history) }}>Login</Button>
-              )}
-            />
+            {
+              this.props.loggedIn ?
+                <Route
+                  render={({ history }) => (
+                    <Button color="contrast" onClick={this.props.logout}>Logout</Button>
+                  )}
+                /> :
+                <Route
+                  render={({ history }) => (
+                    <Button color="contrast" onClick={() => { this.onLoginClick(history) }}>Login</Button>
+                  )}
+                />
+            }
           </Toolbar>
         </AppBar>
       </div>,
       <Route
         key={'sidebar'}
         render={({ history }) => (
-          <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
+          <Sidebar open={this.state.sidebarOpen} loggedIn={this.props.loggedIn} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
         )}
       />]
     );
