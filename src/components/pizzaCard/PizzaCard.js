@@ -41,8 +41,8 @@ export class PizzaCard extends Component {
           <Button dense color="accent">
             Favorite
           </Button>
-          <Button dense color="primary" onClick={this.props.addToCart}>
-            Add to Order
+          <Button dense color="primary" onClick={() => this.props.addToCart({ image: this.props.image, key: this.props.pizzaKey, textBody: this.props.textBody, textHeadline: this.props.textHeadline })}>
+            {this.props.cartItem ? 'Remove from Cart' : 'Add to Order'}
           </Button>
         </CardActions>
       </Card>

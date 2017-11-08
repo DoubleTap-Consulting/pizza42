@@ -1,5 +1,6 @@
 import Grid from 'material-ui/Grid';
 import CartItem from 'components/cartItem/CartItem';
+import PizzaCard from 'components/pizzaCard/PizzaCard';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
@@ -30,44 +31,48 @@ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cartCount: 0,
       cart: []
     };
   }
 
   componentDidMount() {
-    console.log('here')
-    const cartCount = localStorage.getItem('cartCount') || 0;
-    let cart = [];
-    for (var i = 0; i < cartCount; i++) {
-      cart.push(1);
-    }
+    const cart = JSON.parse(localStorage.getItem('cart'));
+
     this.setState({
-      cart,
-      cartCount
-    })
+      cart
+    });
   }
 
-  removeCartItem = () => {
-    localStorage.setItem('cartCount', this.state.cartCount - 1 || 0);
+  removeCartItem = (key) => {
+    let cart = this.state.cart.slice();
+
+    cart.splice(key, 1);
+
     this.setState({
-      cart: this.state.cart.splice(1),
-      cartCount: this.state.cartCount - 1
-    })
+      cart
+    }, () => {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    });
   }
 
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container justify="left" spacing={24}>
-          {
-            this.state.cart.map((i) =>
-              <Grid item key={this.state.cartCount[i]}>
-                <CartItem removeCartItem={this.removeCartItem} />
-              </Grid>
-            )
-          }
+        <Grid container justify="flex-start" spacing={24}>
+          {this.state.cart.map((pizza, index) => (
+            <Grid item key={`${pizza.textHeadlinge}${index}`} sm={6} md={6} lg={4} xl={2}>
+              <PizzaCard
+                addToCart={() => { this.removeCartItem(index) }}
+                cartItem={true}
+                image={pizza.image}
+                pizzaKey={pizza.key}
+                textBody={pizza.textBody}
+                textHeadline={pizza.textHeadline}
+                user={this.state.user}
+              />
+            </Grid>
+          ))}
         </Grid>
       </div>
     );

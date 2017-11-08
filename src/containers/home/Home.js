@@ -76,11 +76,16 @@ class Home extends Component {
     }
   }
 
-  addToCart = () => {
-    // check if loggedIn
-    // add to localStorage
-    const currentCount = localStorage.getItem('cartCount') || 0;
-    localStorage.setItem('cartCount', parseInt(currentCount, 10) + 1);
+  addToCart = (pizza) => {
+    let cart = [];
+    let existingCart = JSON.parse(localStorage.getItem('cart'));
+
+    if (existingCart) {
+      cart = [...existingCart];
+    }
+
+    cart.push(pizza);
+    localStorage.setItem('cart', JSON.stringify(cart));
   }
 
   checkAccessToken = (nextState, replace) => {
@@ -94,12 +99,13 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container justify="center" spacing={24}>
+        <Grid container justify="flex-start" spacing={24}>
           {this.state.pizzas.map((pizza, index) => (
-            <Grid item key={pizza.textHeadline} sm={6} lg={4} xl={2} >
+            <Grid item key={pizza.textHeadline} sm={6} md={6} lg={4} xl={2}>
               <PizzaCard
                 addToCart={this.addToCart}
                 image={pizza.image}
+                pizzaKey={pizza.key}
                 textBody={pizza.textBody}
                 textHeadline={pizza.textHeadline}
                 user={this.state.user}
