@@ -26,15 +26,15 @@ export class PizzaCard extends Component {
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image={pizzaImage}
+          image={this.props.image || pizzaImage}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography type="headline" component="h2">
-            Medium Pepperoni Pizza
+            {this.props.textHeadline}
           </Typography>
           <Typography component="p">
-            A delicious, delectable, delightful pizza topped with pepperonis.
+            {this.props.textBody}
           </Typography>
         </CardContent>
         <CardActions>
