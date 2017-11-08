@@ -7,11 +7,11 @@ import './Sidebar.css';
 
 export class Sidebar extends Component {
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
   }
 
   onProfileItemClick = () => {
-    this.context.router.history.push('/profile')
+    this.context.router.history.push('/profile');
   }
 
   render() {
