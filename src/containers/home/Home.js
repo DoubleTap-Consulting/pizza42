@@ -1,4 +1,5 @@
 import Auth from 'utils/auth';
+import callApi from 'utils/api';
 import Grid from 'material-ui/Grid';
 import PizzaCard from 'components/pizzaCard/PizzaCard';
 import PropTypes from 'prop-types';
@@ -8,7 +9,7 @@ import { withStyles } from 'material-ui/styles';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30,
+    marginTop: 100,
     paddingLeft: 30,
     paddingRight: 30
   },
@@ -47,6 +48,21 @@ class Home extends Component {
             user
           }, () => {
             console.log('user', this.state.user);
+            // See #19
+            console.log('calling dat graph endpoint boiii');
+            if (this.state.user.idTokenPayload.sub.indexOf('facebook') !== -1) {
+              let config = {
+                url: `/auth/searchGraphApi/${this.state.user.idTokenPayload.sub}`,
+                method: 'get'
+              };
+              callApi(config, (response) => {
+                let config = {
+                  url: `/profile/${this.state.user.idTokenPayload.sub}`,
+                  method: 'get'
+                };
+                callApi(config, response => this.setState({ user: response.user }), error => console.log(error));
+              }, error => console.log(error));
+            }
           });
         }
       });
@@ -59,9 +75,8 @@ class Home extends Component {
   addToCart = () => {
     // check if loggedIn
     // add to localStorage
-    const currentCount = localStorage.getItem('cartCount') || 0
-    localStorage.setItem('cartCount', parseInt(currentCount, 10) + 1)
-    // if not logged in, button should be disabled
+    const currentCount = localStorage.getItem('cartCount') || 0;
+    localStorage.setItem('cartCount', parseInt(currentCount, 10) + 1);
   }
 
   checkAccessToken = (nextState, replace) => {
