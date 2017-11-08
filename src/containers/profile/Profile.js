@@ -37,13 +37,13 @@ const styles = theme => ({
     flex: '1 1 auto',
   },
   root: {
-    marginTop: 100
-  }
+    marginTop: 100,
+  },
 });
 
 export class Profile extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -52,9 +52,9 @@ export class Profile extends Component {
       profile: {
         name: '',
         user_metadata: {
-          socialProfiles: []
-        }
-      }
+          socialProfiles: [],
+        },
+      },
     };
     this.auth = new Auth();
     this.logos = {
@@ -66,12 +66,12 @@ export class Profile extends Component {
     this.auth.getProfile((err, profile) => {
       const config = {
         url: `/profile/${profile.sub}`,
-        method: 'get'
+        method: 'get',
       };
       callApi(config, (response) => {
         console.log(response);
         this.setState({
-          profile: response.user
+          profile: response.user,
         }, () => {
           if (localStorage.getItem('loginType') === 'link') {
             const requestSub = localStorage.getItem('linkAccountRequestingSub');
@@ -80,8 +80,8 @@ export class Profile extends Component {
               method: 'post',
               data: {
                 secondaryUserid: this.state.profile.user_id.substring(this.state.profile.user_id.indexOf('|') + 1),
-                secondaryProvider: this.state.profile.user_id.substring(0, this.state.profile.user_id.indexOf('|'))
-              }
+                secondaryProvider: this.state.profile.user_id.substring(0, this.state.profile.user_id.indexOf('|')),
+              },
             }, (response) => {
               console.log('finished linking accounts. response: ', response);
               localStorage.setItem('loginType', '');
@@ -156,12 +156,12 @@ export class Profile extends Component {
               <CardContent>
                 <Typography type="headline">
                   Twitter
-                  </Typography>
+                </Typography>
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
                   Link Account
-              </Button>
+                </Button>
               </CardActions>
             </Card>
           </Grid>
@@ -175,12 +175,12 @@ export class Profile extends Component {
               <CardContent>
                 <Typography type="headline">
                   Google
-                  </Typography>
+                </Typography>
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
                   Link Account
-              </Button>
+                </Button>
               </CardActions>
             </Card>
           </Grid>
@@ -194,12 +194,12 @@ export class Profile extends Component {
               <CardContent>
                 <Typography type="headline">
                   Email
-                  </Typography>
+                </Typography>
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
                   Link Account
-              </Button>
+                </Button>
               </CardActions>
             </Card>
           </Grid>
