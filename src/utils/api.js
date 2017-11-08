@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import jwtDecode from 'jwt-decode';
 
 const axios = Axios.create({
   baseURL: 'http://ec2-54-183-30-7.us-west-1.compute.amazonaws.com:3001/api/',

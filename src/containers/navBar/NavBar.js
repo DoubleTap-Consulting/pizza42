@@ -39,7 +39,7 @@ class NavBar extends Component {
 
   render() {
     return (
-      [<div className="pizza42-navbar">
+      [<div className="pizza42-navbar" key={'navbar'}>
         <AppBar position="static">
           <Toolbar>
             <IconButton className="pizza42-navbar-iconButton" color="contrast" aria-label="Menu">
@@ -58,6 +58,7 @@ class NavBar extends Component {
         </AppBar>
       </div>,
       <Route
+        key={'sidebar'}
         render={({ history }) => (
           <Sidebar open={this.state.sidebarOpen} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
         )}
