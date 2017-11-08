@@ -16,11 +16,15 @@ const muiComponentStyles = {
 };
 
 export class PizzaCard extends Component {
+  static defaultProps = {
+    isCartItem: false,
+  }
+
   static propTypes = {
     addToCart: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     image: PropTypes.string.isRequired,
-    isCartItem: PropTypes.bool.isRequired,
+    isCartItem: PropTypes.bool,
     pizzaKey: PropTypes.number.isRequired,
     textBody: PropTypes.string.isRequired,
     textHeadline: PropTypes.string.isRequired,
