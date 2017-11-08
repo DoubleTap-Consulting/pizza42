@@ -15,7 +15,7 @@ const styles = theme => ({
     padding: 16,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  },
+  }
 });
 
 class Cart extends Component {
@@ -60,11 +60,11 @@ class Cart extends Component {
       <div className={classes.root}>
         <Grid container justify="flex-start" spacing={24}>
           {this.state.cart.map((pizza, index) => (
-            <Grid item key={`${pizza.textHeadlinge}${index}`} sm={6} md={6} lg={4} xl={2}>
+            <Grid item key={`${pizza.textHeadline}${index}`} sm={6} md={6} lg={4} xl={2}>
               <PizzaCard
-                addToCart={() => { this.removeCartItem(index) }}
-                cartItem={true}
+                addToCart={() => { this.removeCartItem(index); }}
                 image={pizza.image}
+                isCartItem
                 pizzaKey={pizza.key}
                 textBody={pizza.textBody}
                 textHeadline={pizza.textHeadline}
