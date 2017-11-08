@@ -40,7 +40,7 @@ class NavBar extends Component {
   render() {
     return (
       [<div className="pizza42-navbar" key={'navbar'}>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton className="pizza42-navbar-iconButton" color="contrast" aria-label="Menu">
               <MenuIcon onClick={this.toggleSidebar} />
