@@ -36,6 +36,9 @@ const styles = theme => ({
   flexGrow: {
     flex: '1 1 auto',
   },
+  root: {
+    marginTop: 100
+  }
 });
 
 export class Profile extends Component {
@@ -106,7 +109,7 @@ export class Profile extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         <Card className={classes.card}>
           <CardHeader
             avatar={
