@@ -85,10 +85,10 @@ export class PizzaCard extends Component {
             this.state.favorited && this.props.loggedIn ?
               <Button dense color="accent" onClick={this.unfavorite}>
                 Unfavorite
-            </Button> :
+              </Button> :
               <Button dense disabled={!this.props.loggedIn} color="accent" onClick={this.favorite}>
                 Favorite
-            </Button>
+              </Button>
           }
           <Button
             dense
