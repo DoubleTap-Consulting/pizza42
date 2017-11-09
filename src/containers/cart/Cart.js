@@ -3,6 +3,7 @@ import PizzaCard from 'components/pizzaCard/PizzaCard';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
+import './Cart.css';
 
 const styles = theme => ({
   root: {
@@ -36,15 +37,23 @@ class Cart extends Component {
     super(props);
     this.state = {
       cart: [],
+      cartEmpty: false,
+      loggedIn: true,
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const cart = JSON.parse(localStorage.getItem('cart')); // eslint-disable-line no-undef
-
-    this.setState({
-      cart,
-    });
+    if (cart) {
+      this.setState({
+        cart,
+        cartEmpty: false,
+      });
+    } else {
+      this.setState({
+        cartEmpty: true,
+      });
+    }
   }
 
   removeCartItem = (key) => {
@@ -70,6 +79,7 @@ class Cart extends Component {
                 addToCart={() => { this.removeCartItem(index); }}
                 image={pizza.image}
                 isCartItem
+                loggedIn={this.state.loggedIn}
                 pizzaKey={pizza.key}
                 textBody={pizza.textBody}
                 textHeadline={pizza.textHeadline}
@@ -78,6 +88,10 @@ class Cart extends Component {
             </Grid>
           ))}
         </Grid>
+        {
+          (this.state.cartEmpty || this.state.cart.length === 0) &&
+          <img src="http://www.startergroup.in/img/empty.png" className="cartEmpty" alt="cart empty" />
+        }
       </div>
     );
   }
