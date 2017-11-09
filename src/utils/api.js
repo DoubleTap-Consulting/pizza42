@@ -5,14 +5,14 @@ const axios = Axios.create({
   timeout: 9000,
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 });
 
 function callApi(
   config,
   onRequestSuccess,
-  onRequestFailure
+  onRequestFailure,
 ) {
   return axios.request(config)
     .then(res => onRequestSuccess(res.data))
@@ -29,7 +29,7 @@ function callApi(
 export default function callApiWithJWT(
   configObject,
   onRequestSuccess,
-  onRequestFailure
+  onRequestFailure,
 ) {
   const token = localStorage.getItem('access_token');
   const config = configObject;
@@ -41,6 +41,6 @@ export default function callApiWithJWT(
   return callApi(
     config,
     onRequestSuccess,
-    onRequestFailure
+    onRequestFailure,
   );
 }
