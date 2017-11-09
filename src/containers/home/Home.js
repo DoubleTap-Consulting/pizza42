@@ -127,12 +127,9 @@ class Home extends Component {
                 addToCart={this.addToCart}
                 user_metadata={this.state.user.user_metadata}
                 image={pizza.image}
-<<<<<<< HEAD
                 loggedIn={this.state.loggedIn}
                 pizzaId={pizza.key}
-=======
                 pizzaKey={pizza.key}
->>>>>>> 420e15ae7bf3f66f1fdbb78cd97839b6d8e2e714
                 textBody={pizza.textBody}
                 textHeadline={pizza.textHeadline}
                 user={this.state.user}
