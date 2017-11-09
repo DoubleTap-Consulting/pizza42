@@ -30,7 +30,6 @@ class Cart extends Component {
 
   static propTypes = {
     classes: PropTypes.object,
-    location: PropTypes.object.isRequired,
   }
 
   constructor(props) {

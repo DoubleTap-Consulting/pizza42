@@ -1,29 +1,23 @@
 import callApi from 'utils/api';
 
 export function favoritePizza(pizzaId, userId) {
-  console.log('userId', userId)
-  let config = {
+  const config = {
     url: `/profile/favorites/${userId}`,
     method: 'post',
     data: {
-      pizzaId
-    }
+      pizzaId,
+    },
   };
-  callApi(config, (response) => {
-
-  }, error => console.log(error));
+  callApi(config, () => { }, error => console.log(error));
 }
 
 export function unfavoritePizza(pizzaId, userId) {
-  console.log('userId', userId)
-  let config = {
+  const config = {
     url: `/profile/favorites/${userId}`,
     method: 'delete',
     data: {
-      pizzaId
-    }
+      pizzaId,
+    },
   };
-  callApi(config, (response) => {
-
-  }, error => console.log(error));
+  callApi(config, () => { }, error => console.log(error));
 }

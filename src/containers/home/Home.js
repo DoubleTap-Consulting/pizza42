@@ -28,9 +28,10 @@ class Home extends Component {
     location: PropTypes.object,
   }
 
-  static defaultProps = {
-    history: {},
-    location: {},
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -72,7 +73,6 @@ class Home extends Component {
             loggedIn: false,
           });
         } else {
-          console.log('url', `/profile/${user.idTokenPayload.sub}`);
           this.setState({
             loggedIn: true,
           });
@@ -81,7 +81,7 @@ class Home extends Component {
               url: `/auth/searchGraphApi/${user.idTokenPayload.sub}`,
               method: 'get',
             };
-            callApi(config, (response) => { }, error => console.log(error));
+            callApi(config, () => { }, error => console.log(error));
           }
         }
       });
@@ -103,7 +103,7 @@ class Home extends Component {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  checkAccessToken = (nextState, replace) => {
+  checkAccessToken = (nextState) => {
     const auth = new Auth();
     if (/access_token|id_token|error/.test(nextState.location.hash)) {
       auth.handleAuthentication();
@@ -115,7 +115,7 @@ class Home extends Component {
     return (
       <div className={classes.root}>
         <Grid container justify="flex-start" spacing={24}>
-          {this.state.pizzas.map((pizza, index) => (
+          {this.state.pizzas.map(pizza => (
             <Grid item key={pizza.textHeadline} sm={6} md={6} lg={4} xl={2}>
               <PizzaCard
                 addToCart={this.addToCart}

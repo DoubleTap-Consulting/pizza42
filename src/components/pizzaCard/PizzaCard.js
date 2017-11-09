@@ -20,6 +20,9 @@ const muiComponentStyles = {
 export class PizzaCard extends Component {
   static defaultProps = {
     isCartItem: false,
+    loggedIn: false,
+    user: {},
+    user_metadata: {},
   }
 
   static propTypes = {
@@ -27,9 +30,12 @@ export class PizzaCard extends Component {
     classes: PropTypes.object.isRequired,
     image: PropTypes.string.isRequired,
     isCartItem: PropTypes.bool,
+    loggedIn: PropTypes.bool,
     pizzaKey: PropTypes.number.isRequired,
     textBody: PropTypes.string.isRequired,
     textHeadline: PropTypes.string.isRequired,
+    user: PropTypes.object,
+    user_metadata: PropTypes.object,
   }
 
   constructor(props) {
