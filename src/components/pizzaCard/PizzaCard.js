@@ -35,7 +35,7 @@ export class PizzaCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorited: false
+      favorited: false,
     };
   }
 
@@ -43,24 +43,24 @@ export class PizzaCard extends Component {
     if (nextProps.user_metadata) {
       if (_.indexOf(nextProps.user_metadata.favorite_pizzas, nextProps.pizzaId) !== -1) {
         this.setState({
-          favorited: true
+          favorited: true,
         });
-      };
+      }
     }
   }
 
   favorite = () => {
-    favoritePizza(this.props.pizzaId, this.props.user.user_id)
+    favoritePizza(this.props.pizzaId, this.props.user.user_id);
     this.setState({
-      favorited: true
-    })
+      favorited: true,
+    });
   }
 
   unfavorite = () => {
-    unfavoritePizza(this.props.pizzaId, this.props.user.user_id)
+    unfavoritePizza(this.props.pizzaId, this.props.user.user_id);
     this.setState({
-      favorited: false
-    })
+      favorited: false,
+    });
   }
 
   render() {
