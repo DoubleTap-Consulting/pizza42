@@ -35,7 +35,8 @@ export class PizzaCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorited: false
+      addSuccess: false,
+      favorited: false,
     };
   }
 
@@ -43,24 +44,41 @@ export class PizzaCard extends Component {
     if (nextProps.user_metadata) {
       if (_.indexOf(nextProps.user_metadata.favorite_pizzas, nextProps.pizzaId) !== -1) {
         this.setState({
-          favorited: true
+          favorited: true,
         });
-      };
+      }
     }
   }
 
-  favorite = () => {
-    favoritePizza(this.props.pizzaId, this.props.user.user_id)
+  addToCart = () => {
     this.setState({
-      favorited: true
-    })
+      addSuccess: true,
+    });
+    setTimeout(() => {
+      this.setState({
+        addSuccess: false,
+      });
+    }, 1500);
+    this.props.addToCart({
+      image: this.props.image,
+      key: this.props.pizzaKey,
+      textBody: this.props.textBody,
+      textHeadline: this.props.textHeadline,
+    });
+  }
+
+  favorite = () => {
+    favoritePizza(this.props.pizzaId, this.props.user.user_id);
+    this.setState({
+      favorited: true,
+    });
   }
 
   unfavorite = () => {
-    unfavoritePizza(this.props.pizzaId, this.props.user.user_id)
+    unfavoritePizza(this.props.pizzaId, this.props.user.user_id);
     this.setState({
-      favorited: false
-    })
+      favorited: false,
+    });
   }
 
   render() {
@@ -82,24 +100,21 @@ export class PizzaCard extends Component {
         </CardContent>
         <CardActions>
           {
-            this.state.favorited && this.props.loggedIn ?
+            this.props.user &&
+            (this.state.favorited && this.props.loggedIn ?
               <Button dense color="accent" onClick={this.unfavorite}>
                 Unfavorite
-            </Button> :
+              </Button> :
               <Button dense disabled={!this.props.loggedIn} color="accent" onClick={this.favorite}>
                 Favorite
-            </Button>
+              </Button>)
           }
           <Button
             dense
             color="primary"
             disabled={!this.props.loggedIn}
-            onClick={() => this.props.addToCart({
-              image: this.props.image,
-              key: this.props.pizzaKey,
-              textBody: this.props.textBody,
-              textHeadline: this.props.textHeadline,
-            })}
+            onClick={this.addToCart}
+            style={this.state.addSuccess ? { backgroundColor: 'green', color: 'white' } : {}}
           >
             {this.props.isCartItem ? 'Remove from Cart' : 'Add to Order'}
           </Button>
