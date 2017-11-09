@@ -36,12 +36,10 @@ export default class Auth {
     const handleAuth = new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
-          console.log('authResult', authResult);
           this.setSession(authResult);
           history.replace('/home');
           resolve(authResult);
         } else if (err) {
-          console.log('err', err);
           history.replace('/home');
           reject(err);
         }
@@ -62,7 +60,7 @@ export default class Auth {
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('userid', authResult.idTokenPayload.sub)
+    localStorage.setItem('userid', authResult.idTokenPayload.sub);
     localStorage.setItem('expires_at', expiresAt);
     // navigate to the home route
     // history.replace('/home');

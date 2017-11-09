@@ -16,6 +16,11 @@ const muiComponentStyles = {
 };
 
 export class CartItem extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    removeCartItem: PropTypes.func.isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.state = {};

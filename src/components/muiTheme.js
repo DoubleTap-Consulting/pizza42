@@ -12,24 +12,24 @@ const themeOptions = {
     primary1Color,
     primary2Color,
     accent1Color,
-    accent2Color
+    accent2Color,
   },
   overrides: {
     MuiAppBar: {
       colorDefault: {
         backgroundColor: primary1Color,
-        color: textAndIconsColor
+        color: textAndIconsColor,
       },
       colorPrimary: {
         backgroundColor: primary1Color,
-        color: textAndIconsColor
+        color: textAndIconsColor,
       },
       colorAccent: {
         backgroundColor: accent1Color,
-        color: accent2Color
-      }
-    }
-  }
+        color: accent2Color,
+      },
+    },
+  },
 };
 
 const theme = createMuiTheme(themeOptions);
