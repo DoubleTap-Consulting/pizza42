@@ -15,7 +15,7 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidebarOpen: false
+      sidebarOpen: false,
     };
   }
 
@@ -25,8 +25,8 @@ class NavBar extends Component {
 
   toggleSidebar = () => {
     this.setState({
-      sidebarOpen: !this.state.sidebarOpen
-    })
+      sidebarOpen: !this.state.sidebarOpen,
+    });
   }
 
   openCart = (history) => {
@@ -39,7 +39,7 @@ class NavBar extends Component {
 
   render() {
     return (
-      [<div className="pizza42-navbar" key={'navbar'}>
+      [<div className="pizza42-navbar" key="navbar">
         <AppBar position="fixed">
           <Toolbar>
             <IconButton className="pizza42-navbar-iconButton" color="contrast" aria-label="Menu">
@@ -48,7 +48,7 @@ class NavBar extends Component {
             <Typography type="title" color="inherit" className="pizza42-navbar-title">
               <img className="pizza42-navbar-logo" height={39} width={50} src={logo} />
               Pizza 42
-          </Typography>
+            </Typography>
             {
               this.props.loggedIn ?
                 <Route
@@ -58,7 +58,7 @@ class NavBar extends Component {
                 /> :
                 <Route
                   render={({ history }) => (
-                    <Button color="contrast" onClick={() => { this.onLoginClick(history) }}>Login</Button>
+                    <Button color="contrast" onClick={() => { this.onLoginClick(history); }}>Login</Button>
                   )}
                 />
             }
@@ -66,9 +66,15 @@ class NavBar extends Component {
         </AppBar>
       </div>,
       <Route
-        key={'sidebar'}
+        key="sidebar"
         render={({ history }) => (
-          <Sidebar open={this.state.sidebarOpen} loggedIn={this.props.loggedIn} toggleSidebar={this.toggleSidebar} openCart={() => { this.openCart(history) }} navigateHome={() => { this.navigateHome(history) }} />
+          <Sidebar
+            open={this.state.sidebarOpen}
+            loggedIn={this.props.loggedIn}
+            toggleSidebar={this.toggleSidebar}
+            openCart={() => { this.openCart(history) }}
+            navigateHome={() => { this.navigateHome(history) }}
+          />
         )}
       />]
     );
