@@ -42,6 +42,10 @@ const styles = theme => ({
 });
 
 export class Profile extends Component {
+  static contextTypes = {
+    history: PropTypes.object,
+  }
+
   static propTypes = {
     classes: PropTypes.object.isRequired,
   }
@@ -64,6 +68,9 @@ export class Profile extends Component {
 
   componentWillMount() {
     this.auth.getProfile((err, profile) => {
+      if (!profile) {
+        this.props.history.push('/login');
+      }
       const config = {
         url: `/profile/${profile.sub}`,
         method: 'get',
@@ -73,6 +80,11 @@ export class Profile extends Component {
         this.setState({
           profile: response.user,
         }, () => {
+          this.state.profile.identities.forEach((identity) => {
+            this.setState({
+              [identity.connection]: identity.connection
+            });
+          });
           if (localStorage.getItem('loginType') === 'link') {
             if (localStorage.getItem('linkingAfterRefresh') === 'true') {
               localStorage.setItem('linkingAfterRefresh', 'false');
@@ -146,7 +158,7 @@ export class Profile extends Component {
                 <Route
                   render={({ history }) => (
                     <Button dense color="primary" onClick={() => this.linkAccount(history)}>
-                      Link Account
+                      {this.state.facebook ? 'Unlink Account' : 'Link Account'}
                     </Button>
                   )}
                 />
@@ -167,7 +179,7 @@ export class Profile extends Component {
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
-                  Link Account
+                  {this.state.twitter ? 'Unlink Account' : 'Link Account'}
                 </Button>
               </CardActions>
             </Card>
@@ -186,7 +198,7 @@ export class Profile extends Component {
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
-                  Link Account
+                  {this.state.google ? 'Unlink Account' : 'Link Account'}
                 </Button>
               </CardActions>
             </Card>
@@ -205,7 +217,7 @@ export class Profile extends Component {
               </CardContent>
               <CardActions>
                 <Button dense color="primary">
-                  Link Account
+                  {this.state.email ? 'Unlink Account' : 'Link Account'}
                 </Button>
               </CardActions>
             </Card>
