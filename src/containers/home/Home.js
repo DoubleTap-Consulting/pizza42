@@ -13,7 +13,7 @@ const styles = theme => ({
     flexGrow: 1,
     marginTop: 100,
     paddingLeft: 30,
-    paddingRight: 30
+    paddingRight: 30,
   },
   paper: {
     padding: 16,
@@ -39,49 +39,47 @@ class Home extends Component {
       pizzas: seedPizzaArray(),
       user: {
         idTokenPayload: {
-          sub: ''
+          sub: '',
         },
         user_metadata: {
-          favorite_pizzas: []
-        }
-      }
+          favorite_pizzas: [],
+        },
+      },
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const auth = new Auth();
-    const uid = localStorage.getItem('userid')
+    const uid = localStorage.getItem('userid');
     if (uid) {
       this.setState({
-        loggedIn: true
-      })
-      let config = {
+        loggedIn: true,
+      });
+      const config = {
         url: `/profile/${uid}`,
-        method: 'get'
+        method: 'get',
       };
-      callApi(config, response => {
-        console.log('response', response.user);
-        this.setState({ user: response.user })
+      callApi(config, (response) => {
+        this.setState({ user: response.user });
       }, error => console.log(error));
     }
 
     auth.handleAuthentication()
-      .then(user => {
-        // Was logged in
+      .then((user) => {
         if (!this.props.location.hash.indexOf('access_token')) {
-          console.log('not logged in');
+          // Not logged in
           this.setState({
-            loggedIn: false
-          })
+            loggedIn: false,
+          });
         } else {
-          console.log('url', `/profile/${user.idTokenPayload.sub}`)
+          console.log('url', `/profile/${user.idTokenPayload.sub}`);
           this.setState({
-            loggedIn: true
-          })
+            loggedIn: true,
+          });
           if (user.idTokenPayload.sub.indexOf('facebook') !== -1) {
-            let config = {
+            const config = {
               url: `/auth/searchGraphApi/${user.idTokenPayload.sub}`,
-              method: 'get'
+              method: 'get',
             };
             callApi(config, (response) => { }, error => console.log(error));
           }
@@ -95,7 +93,7 @@ class Home extends Component {
 
   addToCart = (pizza) => {
     let cart = [];
-    let existingCart = JSON.parse(localStorage.getItem('cart'));
+    const existingCart = JSON.parse(localStorage.getItem('cart'));
 
     if (existingCart) {
       cart = [...existingCart];
@@ -110,10 +108,6 @@ class Home extends Component {
     if (/access_token|id_token|error/.test(nextState.location.hash)) {
       auth.handleAuthentication();
     }
-  }
-
-  logging = () => {
-    console.log('state', this.state)
   }
 
   render() {
