@@ -25,12 +25,12 @@ const styles = theme => ({
 class Home extends Component {
   static contextTypes = {
     history: PropTypes.object,
-    location: PropTypes.object
+    location: PropTypes.object,
   }
 
   static defaultProps = {
     history: {},
-    location: {}
+    location: {},
   }
 
   constructor(props) {
