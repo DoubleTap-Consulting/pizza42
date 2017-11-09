@@ -48,6 +48,7 @@ export class Profile extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -76,13 +77,12 @@ export class Profile extends Component {
         method: 'get',
       };
       callApi(config, (response) => {
-        console.log(response);
         this.setState({
           profile: response.user,
         }, () => {
           this.state.profile.identities.forEach((identity) => {
             this.setState({
-              [identity.connection]: identity.connection
+              [identity.connection]: identity.connection,
             });
           });
           if (localStorage.getItem('loginType') === 'link') {
@@ -96,12 +96,9 @@ export class Profile extends Component {
                   secondaryUserid: this.state.profile.user_id.substring(this.state.profile.user_id.indexOf('|') + 1),
                   secondaryProvider: this.state.profile.user_id.substring(0, this.state.profile.user_id.indexOf('|')),
                 },
-              }, (res) => {
-                console.log('finished linking accounts. res: ', res);
+              }, () => {
                 localStorage.setItem('loginType', '');
-              }, (error) => {
-                console.log(error);
-              });
+              }, () => { });
             } else {
               localStorage.setItem('linkingAfterRefresh', 'true');
               // refresh the view
@@ -109,9 +106,7 @@ export class Profile extends Component {
             }
           }
         });
-      }, (error) => {
-        console.log(error);
-      });
+      }, () => { });
     });
   }
 
@@ -123,6 +118,51 @@ export class Profile extends Component {
     localStorage.setItem('linkAccountRequestingSub', this.state.profile.user_id);
     history.push('/login');
     // this.auth.login();
+  }
+
+  unlinkAccount = (platformName) => {
+    let secondaryUserid;
+    this.state.profile.identities.forEach((identity) => {
+      if (identity.connection === platformName) {
+        secondaryUserid = identity.user_id;
+        // Set the existing social connection to null
+        this.setState({
+          [platformName]: null,
+        });
+      }
+    });
+
+    const config = {
+      url: `/profile/link/${this.state.profile.user_id}`,
+      method: 'delete',
+      data: {
+        secondaryProvider: platformName,
+        secondaryUserid,
+      },
+    };
+
+    callApi(config, () => {
+      this.auth.getProfile((err, profile) => {
+        if (!profile) {
+          this.props.history.push('/login');
+        }
+        const config2 = {
+          url: `/profile/${profile.sub}`,
+          method: 'get',
+        };
+        callApi(config2, (response) => {
+          this.setState({
+            profile: response.user,
+          }, () => {
+            this.state.profile.identities.forEach((identity) => {
+              this.setState({
+                [identity.connection]: identity.connection,
+              });
+            });
+          });
+        }, () => { });
+      });
+    }, () => { });
   }
 
   render() {
@@ -157,7 +197,7 @@ export class Profile extends Component {
               <CardActions>
                 <Route
                   render={({ history }) => (
-                    <Button dense color="primary" onClick={() => this.linkAccount(history)}>
+                    <Button dense color="primary" onClick={() => (this.state.facebook ? this.unlinkAccount('facebook') : this.linkAccount(history))}>
                       {this.state.facebook ? 'Unlink Account' : 'Link Account'}
                     </Button>
                   )}
@@ -178,9 +218,13 @@ export class Profile extends Component {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button dense color="primary">
-                  {this.state.twitter ? 'Unlink Account' : 'Link Account'}
-                </Button>
+                <Route
+                  render={({ history }) => (
+                    <Button dense color="primary" onClick={() => this.linkAccount(history)}>
+                      {this.state.twitter ? 'Unlink Account' : 'Link Account'}
+                    </Button>
+                  )}
+                />
               </CardActions>
             </Card>
           </Grid>
@@ -197,9 +241,13 @@ export class Profile extends Component {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button dense color="primary">
-                  {this.state.google ? 'Unlink Account' : 'Link Account'}
-                </Button>
+                <Route
+                  render={({ history }) => (
+                    <Button dense color="primary" onClick={() => this.linkAccount(history)}>
+                      {this.state['google-oauth2'] ? 'Unlink Account' : 'Link Account'}
+                    </Button>
+                  )}
+                />
               </CardActions>
             </Card>
           </Grid>
@@ -216,9 +264,13 @@ export class Profile extends Component {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button dense color="primary">
-                  {this.state.email ? 'Unlink Account' : 'Link Account'}
-                </Button>
+                <Route
+                  render={({ history }) => (
+                    <Button dense color="primary" onClick={() => this.linkAccount(history)}>
+                      {this.state['Username-Password-Authentication'] ? 'Unlink Account' : 'Link Account'}
+                    </Button>
+                  )}
+                />
               </CardActions>
             </Card>
           </Grid>
