@@ -8,10 +8,10 @@ export default class Auth {
     redirectUri: 'http://localhost:3000/callback',
     audience: 'https://doubletap-consulting.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid profile'
+    scope: 'openid profile',
   })
 
-  getAccessToken() {
+  getAccessToken = () => {
     const accessToken = localStorage.getItem('access_token');
     if (!accessToken) {
       throw new Error('No access token found');
@@ -20,7 +20,7 @@ export default class Auth {
   }
 
   getProfile = (cb) => {
-    let accessToken = this.getAccessToken();
+    const accessToken = this.getAccessToken();
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         this.userProfile = profile;
@@ -36,30 +36,30 @@ export default class Auth {
     const handleAuth = new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
-          console.log('authResult', authResult)
+          console.log('authResult', authResult);
           this.setSession(authResult);
           history.replace('/home');
           resolve(authResult);
         } else if (err) {
           console.log('err', err);
           history.replace('/home');
-          reject(err)
+          reject(err);
         }
       });
     });
-    return handleAuth
+    return handleAuth;
   }
 
-  isAuthenticated() {
-    // Check whether the current time is past the 
+  isAuthenticated = () => {
+    // Check whether the current time is past the
     // access token's expiry time
-    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
 
-  setSession(authResult) {
+  setSession = (authResult) => {
     // Set the time that the access token will expire at
-    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('userid', authResult.idTokenPayload.sub)
@@ -72,13 +72,13 @@ export default class Auth {
     this.auth0.authorize();
   }
 
-  logout() {
+  logout = () => {
     // Clear access token and ID token from local storage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    localStorage.removeItem('cartCount')
-    localStorage.removeItem('userid')
+    localStorage.removeItem('cartCount');
+    localStorage.removeItem('userid');
     // navigate to the home route
     history.replace('/home');
   }
