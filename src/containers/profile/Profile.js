@@ -74,20 +74,27 @@ export class Profile extends Component {
           profile: response.user,
         }, () => {
           if (localStorage.getItem('loginType') === 'link') {
-            const requestSub = localStorage.getItem('linkAccountRequestingSub');
-            callApi({
-              url: `/profile/link/${requestSub}`,
-              method: 'post',
-              data: {
-                secondaryUserid: this.state.profile.user_id.substring(this.state.profile.user_id.indexOf('|') + 1),
-                secondaryProvider: this.state.profile.user_id.substring(0, this.state.profile.user_id.indexOf('|')),
-              },
-            }, (response) => {
-              console.log('finished linking accounts. response: ', response);
-              localStorage.setItem('loginType', '');
-            }, (error) => {
-              console.log(error);
-            });
+            if (localStorage.getItem('linkingAfterRefresh') === 'true') {
+              localStorage.setItem('linkingAfterRefresh', 'false');
+              const requestSub = localStorage.getItem('linkAccountRequestingSub');
+              callApi({
+                url: `/profile/link/${requestSub}`,
+                method: 'post',
+                data: {
+                  secondaryUserid: this.state.profile.user_id.substring(this.state.profile.user_id.indexOf('|') + 1),
+                  secondaryProvider: this.state.profile.user_id.substring(0, this.state.profile.user_id.indexOf('|')),
+                },
+              }, (res) => {
+                console.log('finished linking accounts. res: ', res);
+                localStorage.setItem('loginType', '');
+              }, (error) => {
+                console.log(error);
+              });
+            } else {
+              localStorage.setItem('linkingAfterRefresh', 'true');
+              // refresh the view
+              window.location.reload(false);
+            }
           }
         });
       }, (error) => {
