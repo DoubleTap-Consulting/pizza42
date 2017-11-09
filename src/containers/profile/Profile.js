@@ -130,7 +130,7 @@ export class Profile extends Component {
           />
         </Card>
         <Grid container justify="center" spacing={24}>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Card>
               <CardMedia
                 image={facebookLogo}
@@ -153,7 +153,7 @@ export class Profile extends Component {
               </CardActions>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Card>
               <CardMedia
                 image={twitterLogo}
@@ -172,7 +172,7 @@ export class Profile extends Component {
               </CardActions>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Card>
               <CardMedia
                 image={googleLogo}
@@ -191,7 +191,7 @@ export class Profile extends Component {
               </CardActions>
             </Card>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Card>
               <CardMedia
                 image={emailIcon}
