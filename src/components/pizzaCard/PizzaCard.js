@@ -35,6 +35,7 @@ export class PizzaCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      addSuccess: false,
       favorited: false,
     };
   }
@@ -47,6 +48,23 @@ export class PizzaCard extends Component {
         });
       }
     }
+  }
+
+  addToCart = () => {
+    this.setState({
+      addSuccess: true,
+    });
+    setTimeout(() => {
+      this.setState({
+        addSuccess: false,
+      });
+    }, 1500);
+    this.props.addToCart({
+      image: this.props.image,
+      key: this.props.pizzaKey,
+      textBody: this.props.textBody,
+      textHeadline: this.props.textHeadline,
+    });
   }
 
   favorite = () => {
@@ -82,24 +100,21 @@ export class PizzaCard extends Component {
         </CardContent>
         <CardActions>
           {
-            this.state.favorited && this.props.loggedIn ?
+            this.props.user &&
+            (this.state.favorited && this.props.loggedIn ?
               <Button dense color="accent" onClick={this.unfavorite}>
                 Unfavorite
               </Button> :
               <Button dense disabled={!this.props.loggedIn} color="accent" onClick={this.favorite}>
                 Favorite
-              </Button>
+              </Button>)
           }
           <Button
             dense
             color="primary"
             disabled={!this.props.loggedIn}
-            onClick={() => this.props.addToCart({
-              image: this.props.image,
-              key: this.props.pizzaKey,
-              textBody: this.props.textBody,
-              textHeadline: this.props.textHeadline,
-            })}
+            onClick={this.addToCart}
+            style={this.state.addSuccess ? { backgroundColor: 'green', color: 'white' } : {}}
           >
             {this.props.isCartItem ? 'Remove from Cart' : 'Add to Order'}
           </Button>

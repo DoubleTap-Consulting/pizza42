@@ -56,6 +56,7 @@ export class Profile extends Component {
     this.state = {
       profile: {
         name: '',
+        sub: '',
         user_metadata: {
           socialProfiles: [],
         },
