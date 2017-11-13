@@ -83,5 +83,6 @@ export default class Auth {
     localStorage.removeItem('loginType');
     // navigate to the home route
     history.replace('/home');
+    window.location.reload();
   }
 }
