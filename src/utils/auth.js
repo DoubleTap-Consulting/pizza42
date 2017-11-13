@@ -5,11 +5,12 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'doubletap-consulting.auth0.com',
     clientID: 'rTPIMjZe2grcF0R1Wivk3reWoQoQakO9',
-    redirectUri: 'http://ec2-54-183-30-7.us-west-1.compute.amazonaws.com/callback',
+    redirectUri: 'http://localhost:3000/callback',
     audience: 'https://doubletap-consulting.auth0.com/userinfo',
     responseType: 'token id_token',
     scope: 'openid profile',
   })
+  // http://ec2-54-183-30-7.us-west-1.compute.amazonaws.com/callback
 
   getAccessToken = () => {
     const accessToken = localStorage.getItem('access_token');

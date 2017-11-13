@@ -49,7 +49,7 @@ class Home extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const auth = new Auth();
     const uid = localStorage.getItem('userid');
     if (localStorage.getItem('access_token')) {

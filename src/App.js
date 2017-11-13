@@ -17,17 +17,15 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // Was logged in
-    const uid = localStorage.getItem('userid');
-    console.log('uid', uid);
-    if (uid) {
-      this.setState({ // eslint-disable-line
-        loggedIn: true,
+    if (!localStorage.getItem('access_token')) {
+      this.setState({
+        loggedIn: false,
       });
     } else {
-      this.setState({ // eslint-disable-line
-        loggedIn: false,
+      this.setState({
+        loggedIn: true,
       });
     }
   }
