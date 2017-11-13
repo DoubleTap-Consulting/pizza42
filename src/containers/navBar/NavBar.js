@@ -19,9 +19,9 @@ class NavBar extends Component {
     };
   }
 
-  onLoginClick(history) {
+  onLoginClick = (history) => {
     history.push('/login');
-  }
+  };
 
   toggleSidebar = () => {
     this.setState({
@@ -46,19 +46,15 @@ class NavBar extends Component {
               <MenuIcon onClick={this.toggleSidebar} />
             </IconButton>
             <Typography type="title" color="inherit" className="pizza42-navbar-title">
-              <img className="pizza42-navbar-logo" height={39} width={50} src={logo} />
+              <img className="pizza42-navbar-logo" height={39} width={50} src={logo} alt="logo" />
               Pizza 42
             </Typography>
             {
               this.props.loggedIn ?
+                <Button color="contrast" onClick={this.props.logout}>Logout</Button> :
                 <Route
                   render={({ history }) => (
-                    <Button color="contrast" onClick={this.props.logout}>Logout</Button>
-                  )}
-                /> :
-                <Route
-                  render={({ history }) => (
-                    <Button color="contrast" onClick={() => { this.onLoginClick(history); }}>Login</Button>
+                    <Button color="contrast" onClick={() => { this.onLoginClick(history); }}>Login/Signup</Button>
                   )}
                 />
             }

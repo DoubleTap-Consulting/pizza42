@@ -5,12 +5,11 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'doubletap-consulting.auth0.com',
     clientID: 'rTPIMjZe2grcF0R1Wivk3reWoQoQakO9',
-    redirectUri: 'http://localhost:3000/callback',
+    redirectUri: 'http://ec2-54-183-30-7.us-west-1.compute.amazonaws.com/callback',
     audience: 'https://doubletap-consulting.auth0.com/userinfo',
     responseType: 'token id_token',
     scope: 'openid profile',
   })
-  // http://ec2-54-183-30-7.us-west-1.compute.amazonaws.com/callback
 
   getAccessToken = () => {
     const accessToken = localStorage.getItem('access_token');
@@ -72,16 +71,8 @@ export default class Auth {
   }
 
   logout = () => {
-    // Clear access token and ID token from local storage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
-    localStorage.removeItem('cartCount');
-    localStorage.removeItem('userid');
-    localStorage.removeItem('linkAccountRequestingSub');
-    localStorage.removeItem('linkingAfterRefresh');
-    localStorage.removeItem('cart');
-    localStorage.removeItem('loginType');
+    // Clear local storage
+    localStorage.clear();
     // navigate to the home route
     history.replace('/home');
     window.location.reload();

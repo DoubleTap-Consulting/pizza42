@@ -30,6 +30,7 @@ class Home extends Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    forceRender: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
   }
@@ -46,17 +47,14 @@ class Home extends Component {
           favorite_pizzas: [],
         },
       },
+      loggedIn: false,
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const auth = new Auth();
     const uid = localStorage.getItem('userid');
-    if (localStorage.getItem('access_token')) {
-      console.log('access token with: ', localStorage.getItem('access_token'));
-    }
     if (uid) {
-      console.log('uid', uid);
       const config = {
         url: `/profile/${uid}`,
         method: 'get',
@@ -68,15 +66,19 @@ class Home extends Component {
 
     auth.handleAuthentication()
       .then((user) => {
+        console.log('user', user);
+        // Error out here, says 'nonce does not match'
         if (!this.props.location.hash.indexOf('access_token')) {
           // Not logged in
           this.setState({
             loggedIn: false,
           });
         } else {
+          console.log('yes logged in');
           this.setState({
             loggedIn: true,
           });
+          this.props.forceRender();
           if (user.idTokenPayload.sub.indexOf('facebook') !== -1) {
             const config = {
               url: `/auth/searchGraphApi/${user.idTokenPayload.sub}`,

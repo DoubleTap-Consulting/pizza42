@@ -19,15 +19,15 @@ class App extends Component {
 
   componentWillMount() {
     // Was logged in
-    if (!localStorage.getItem('access_token')) {
-      this.setState({
-        loggedIn: false,
-      });
-    } else {
+    if (localStorage.getItem('access_token')) {
       this.setState({
         loggedIn: true,
       });
     }
+  }
+
+  forceRender = () => {
+    this.forceupdate();
   }
 
   logout = () => {
@@ -47,7 +47,8 @@ class App extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/login" component={Login} />
             <Route path="/profile" component={Profile} />
-            <Route path="/" component={Home} />
+            <Route path="/home" render={props => <Home forceRender={this.forceRender} {...props} />} />
+            <Route path="/" render={props => <Home forceRender={this.forceRender} {...props} />} />
           </Switch>
         </div>
       </MuiThemeProvider>
