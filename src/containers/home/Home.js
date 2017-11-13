@@ -52,16 +52,17 @@ class Home extends Component {
   componentWillMount() {
     const auth = new Auth();
     const uid = localStorage.getItem('userid');
+    if (localStorage.getItem('access_token')) {
+      console.log('access token with: ', localStorage.getItem('access_token'));
+    }
     if (uid) {
-      this.setState({
-        loggedIn: true,
-      });
+      console.log('uid', uid);
       const config = {
         url: `/profile/${uid}`,
         method: 'get',
       };
       callApi(config, (response) => {
-        this.setState({ user: response.user });
+        this.setState({ user: response.user, loggedIn: true });
       }, error => console.log(error));
     }
 

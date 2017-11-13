@@ -77,6 +77,10 @@ export default class Auth {
     localStorage.removeItem('expires_at');
     localStorage.removeItem('cartCount');
     localStorage.removeItem('userid');
+    localStorage.removeItem('linkAccountRequestingSub');
+    localStorage.removeItem('linkingAfterRefresh');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('loginType');
     // navigate to the home route
     history.replace('/home');
   }

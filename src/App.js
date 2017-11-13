@@ -19,13 +19,15 @@ class App extends Component {
 
   componentWillMount() {
     // Was logged in
-    if (!localStorage.getItem('access_token')) {
+    const uid = localStorage.getItem('userid');
+    console.log('uid', uid);
+    if (uid) {
       this.setState({
-        loggedIn: false,
+        loggedIn: true,
       });
     } else {
       this.setState({
-        loggedIn: true,
+        loggedIn: false,
       });
     }
   }
