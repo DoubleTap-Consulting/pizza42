@@ -83,6 +83,7 @@ class Cart extends Component {
                 textBody={pizza.textBody}
                 textHeadline={pizza.textHeadline}
                 user={this.state.user}
+                cartItem
               />
             </Grid>
           ))}
