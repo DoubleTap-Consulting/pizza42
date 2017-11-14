@@ -53,7 +53,7 @@ class Home extends Component {
 
   componentDidMount() {
     const auth = new Auth();
-    const uid = localStorage.getItem('userid');
+    let uid = localStorage.getItem('userid');
     if (uid) {
       const config = {
         url: `/profile/${uid}`,
@@ -66,7 +66,6 @@ class Home extends Component {
 
     auth.handleAuthentication()
       .then((user) => {
-        console.log('user', user);
         // Error out here, says 'nonce does not match'
         if (!this.props.location.hash.indexOf('access_token')) {
           // Not logged in
@@ -74,11 +73,15 @@ class Home extends Component {
             loggedIn: false,
           });
         } else {
-          console.log('yes logged in');
-          this.setState({
-            loggedIn: true,
-          });
           this.props.forceRender();
+          uid = user.idTokenPayload.sub;
+          const userConfig = {
+            url: `/profile/${uid}`,
+            method: 'get',
+          };
+          callApi(userConfig, (response) => {
+            this.setState({ user: response.user, loggedIn: true });
+          }, error => console.log(error));
           if (user.idTokenPayload.sub.indexOf('facebook') !== -1) {
             const config = {
               url: `/auth/searchGraphApi/${user.idTokenPayload.sub}`,

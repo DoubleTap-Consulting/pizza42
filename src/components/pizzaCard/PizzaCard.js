@@ -74,6 +74,7 @@ export class PizzaCard extends Component {
   }
 
   favorite = () => {
+    console.log('this.props', this.props.user);
     favoritePizza(this.props.pizzaId, this.props.user.user_id);
     this.setState({
       favorited: true,
