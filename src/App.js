@@ -14,6 +14,7 @@ class App extends Component {
     super(props);
     this.state = {
       loggedIn: false,
+      updated: false,
     };
   }
 
@@ -26,8 +27,19 @@ class App extends Component {
     }
   }
 
+  componentWillUpdate() {
+    if (!this.state.updated) {
+      if (localStorage.getItem('access_token')) {
+        this.setState({
+          loggedIn: true,
+          updated: true,
+        });
+      }
+    }
+  }
+
   forceRender = () => {
-    this.forceupdate();
+    this.forceUpdate();
   }
 
   logout = () => {
